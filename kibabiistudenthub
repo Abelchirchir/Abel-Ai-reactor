@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kibabii University · Student Hub</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1400px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-radius: 24px;
+      overflow: hidden;
+      margin: 20px;
+    }
+
+    /* screens toggle */
+    .screen {
+      display: block;
+    }
+    .screen.hidden {
+      display: none;
+    }
+
+    /* ---------- LOGIN SCREEN ---------- */
+    #login-screen {
+      background: linear-gradient(145deg, #f8fafc 0%, #e9edf2 100%);
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      background: #1a2b3c;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .carousel-slide::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.5));
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 30px;
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+
+    .login-card {
+      max-width: 450px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0,40,80,0.2);
+    }
+
+    .login-card h2 {
+      color: #0b2d4b;
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    .login-card .sub {
+      color: #2c3e50;
+      margin-bottom: 24px;
+      border-left: 4px solid #2a7f62;
+      padding-left: 16px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 500;
+      color: #1e3a5f;
+      margin-bottom: 6px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #dde3e9;
+      border-radius: 40px;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: #2a7f62;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(42,127,98,0.2);
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #1e3a5f;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0b2d4b;
+    }
+
+    .btn-secondary {
+      background: #e6eef9;
+      color: #1e3a5f;
+    }
+
+    .btn-secondary:hover {
+      background: #d0ddeb;
+    }
+
+    /* ---------- DASHBOARD SCREEN ---------- */
+    #dashboard-screen {
+      background: #f0f2f5;
+    }
+
+    /* mini carousel in header */
+    .dashboard-header {
+      background: white;
+      padding: 15px 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .header-carousel {
+      width: 100%;
+      max-width: 500px;
+      height: 90px;
+      border-radius: 50px;
+      overflow: hidden;
+      position: relative;
+      background: #1a2b3c;
+    }
+
+    .mini-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+
+    .mini-slide {
+      min-width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 40px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #b02a37;
+    }
+    .Dashboard-btn:hover {
+        background:#00FF4B;
+        color:#003A7B;
+        border-radius:40px;
+        font-weight;600;
+        padding:8px 20px;
+    }
+
+    /* dashboard layout */
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+      padding: 25px;
+      background: #f0f2f5;
+    }
+
+    /* feed area */
+    .feed {
+      background: white;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .post-creator {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      align-items: flex-start;
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 24px;
+    }
+
+    .post-creator img.avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #2a7f62;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .post-input-area {
+      flex: 1;
+    }
+
+    .post-input-area textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 24px;
+      resize: vertical;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .post-input-area textarea:focus {
+      border-color: #2a7f62;
+      outline: none;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .file-upload {
+      position: relative;
+      display: inline-block;
+    }
+
+    .file-upload-btn {
+      background: #e6eef9;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #1e3a5f;
+    }
+
+    .file-upload input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .btn-post {
+      background: #1e3a5f;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* posts list */
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .post-card {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 18px;
+      border: 1px solid #e9edf2;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .post-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2a7f62;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .post-author {
+      font-weight: 600;
+      color: #1e3a5f;
+    }
+
+    .post-time {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .post-content p {
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .post-image {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 20px;
+      margin-top: 10px;
+      object-fit: cover;
+    }
+
+    /* chat sidebar (Facebook style) */
+    .chat-sidebar {
+      background: white;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+    }
+
+    .chat-header {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1e3a5f;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eef2f6;
+    }
+
+    .contacts-list {
+      list-style: none;
+      margin-bottom: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-bottom: 4px;
+    }
+
+    .contact:hover, .contact.active {
+      background: #e6f0fa;
+    }
+
+    .contact-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2a7f62;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .contact-info {
+      flex: 1;
+    }
+
+    .contact-name {
+      font-weight: 600;
+    }
+
+    .contact-status {
+      font-size: 0.75rem;
+      color: #28a745;
+    }
+
+    .chat-window {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .messages {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      padding: 8px 14px;
+      border-radius: 20px;
+      max-width: 80%;
+      word-break: break-word;
+    }
+
+    .message.received {
+      background: white;
+      align-self: flex-start;
+      border: 1px solid #dde3e9;
+    }
+
+    .message.sent {
+      background: #1e3a5f;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 12px 18px;
+      border: 2px solid #dde3e9;
+      border-radius: 40px;
+    }
+
+    .chat-input-area input:focus {
+      border-color: #2a7f62;
+      outline: none;
+    }
+
+    .send-btn {
+      background: #1e3a5f;
+      color: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+      .header-carousel {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .app { margin: 10px; }
+      .login-card { padding: 20px; }
+    }
+
+    /* institution background (subtle) */
+    .feed, .chat-sidebar {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(2px);
+      position: relative;
+    }
+    .feed::before, .chat-sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600') center/cover;
+      opacity: 0.03;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- LOGIN SCREEN -->
+  <div>
+      <img src="/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773426402881.jpg" height="100" width="100" alt="school logo"/> <h1>KIBABII UNIVERSITY</h1><h3>Students Hub<h3>
+  </div>
+  <div id="login-screen" class="screen">
+    <!-- carousel -->
+    <div class="carousel-container" id="loginCarousel">
+      <div class="carousel-track" id="loginTrack"></div>
+    </div>
+
+    <div class="login-card">
+      <h2>Welcome back</h2>
+      <div class="sub">Kibabii University · Student Hub</div>
+      <div class="input-group">
+        <label>Email or Registration No.</label>
+        <input type="text" placeholder="e.g., BEC2021-001" id="username">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" id="password">
+      </div>
+      <div class="login-actions">
+        <button class="btn btn-primary" id="loginBtn">Sign in</button>
+        <button class="btn btn-secondary" id="signupBtn">Create account</button>
+      </div>
+      <p style="margin-top: 20px; font-size: 0.9rem; color: #4a5568;">👆 Use any credentials to enter dashboard</p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD SCREEN (hidden initially) -->
+  <div id="dashboard-screen" class="screen hidden">
+    <!-- header with mini carousel and logout -->
+    <div class="dashboard-header">
+      <div class="header-carousel" id="dashboardCarousel">
+        <div class="mini-track" id="dashboardTrack"></div>
+      </div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      <button class="Dashboard-btn" id="DashcoardBtn"><i class="fasfa-sign-out-alt"><i/> Dashboard</button>
+    </div>
+
+    <!-- main dashboard -->
+    <div class="dashboard-container">
+      <!-- LEFT FEED -->
+      <div class="feed">
+        <div class="post-creator">
+          <div class="avatar" style="background:#2a7f62;">KU</div>
+          <div class="post-input-area">
+            <textarea id="postText" placeholder="Share your findings, ideas..."></textarea>
+            <div class="post-actions">
+              <div class="file-upload">
+                <span class="file-upload-btn"><i class="fas fa-image"></i> Add picture</span>
+                <input type="file" id="imageUpload" accept="image/*">
+              </div>
+              <button class="btn-post" id="createPostBtn">Post</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- posts feed -->
+        <div class="posts-list" id="postsFeed">
+          <!-- sample posts will be injected via JS -->
+        </div>
+      </div>
+
+      <!-- RIGHT CHAT (Facebook style) -->
+      <div class="chat-sidebar">
+        <div class="chat-header">
+          <i class="fas fa-comment-dots" style="margin-right: 8px;"></i> Messages
+        </div>
+        <ul class="contacts-list" id="contactsList">
+          <!-- contacts from JS -->
+        </ul>
+        <div class="chat-window" id="chatWindow">
+          <div class="messages" id="chatMessages"></div>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button class="send-btn" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- INSTITUTION IMAGES (10) ----------
+    const uniImages = [
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773606176342.jpg', caption: 'Kibabii Graduation' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/IMG_20260315_234118.jpg', caption: 'Main Library' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773596181035.jpg', caption: 'STC' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773606722107.jpg', caption: 'Lecture Hall' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/20260316_141147.png', caption: 'Central Campus' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773606651295.jpg', caption: 'Administration Block' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/20260316_121739.png', caption: 'Auditorium' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/watermark-22adc2f98e991a6ca9b7a600500d97b2_0.jpeg', caption: 'ICT Laboratory' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773606509124.jpg', caption: 'Sports Complex' },
+      { url: '/storage/emulated/0/Android/data/com.fazil.htmleditor/files/Documents/Hospital system /media/images/1773597348389.jpg', caption: 'Aerial view of Kibabii University' }
+    ];
+
+    // ----- CAROUSEL SETUP (reusable) -----
+    function initCarousel(trackId, images, isMini = false) {
+      const track = document.getElementById(trackId);
+      if (!track) return;
+      track.innerHTML = '';
+      images.forEach((img, idx) => {
+        const slide = document.createElement('div');
+        slide.className = isMini ? 'mini-slide' : 'carousel-slide';
+        slide.style.backgroundImage = `url('${img.url}')`;
+        if (!isMini) {
+          const caption = document.createElement('div');
+          caption.className = 'carousel-caption';
+          caption.innerText = img.caption;
+          slide.appendChild(caption);
+        }
+        track.appendChild(slide);
+      });
+
+      let current = 0;
+      const slides = track.children;
+      const total = slides.length;
+
+      function nextSlide() {
+        current = (current + 1) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+      }
+
+      // auto scroll every 3 seconds
+      setInterval(nextSlide, 3000);
+    }
+
+    // initialize both carousels
+    initCarousel('loginTrack', uniImages, false);
+    initCarousel('dashboardTrack', uniImages, true);
+
+    // ---------- STATE ----------
+    let posts = [
+      { id: 1, author: 'James Otieno', time: '2h ago', text: 'Just discovered a great research paper on renewable energy in the library! #findings', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600' },
+      { id: 2, author: 'Peter Lusweti', time: '5h ago', text: 'Group discussion tomorrow at 10am in the ICT hub. All welcome!', image: null }
+    ];
+
+    let contacts = [
+      { id: 'c1', name: 'Clinton Billy', status: 'online', avatar: 'BW', messages: [
+        { from: 'contact', text: 'Hey, did you get the notes?' },
+        { from: 'me', text: 'Yes, thanks! I’ll share them.' }
+      ]},
+      { id: 'c2', name: 'Maureen Achieng', status: 'online', avatar: 'MA', messages: [
+        { from: 'contact', text: 'Are we still meeting for the project?' },
+        { from: 'me', text: 'Sure, 2pm at the library.' }
+      ]},
+      { id: 'c3', name: 'Peter Simiyu', status: 'offline', avatar: 'PS', messages: [
+        { from: 'contact', text: 'I uploaded the slides.' }
+      ]}
+    ];
+
+    let activeContactId = 'c1'; // default first
+
+    // ----- DOM elements -----
+    const loginScreen = document.getElementById('login-screen');
+    const dashboardScreen = document.getElementById('dashboard-screen');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const postsFeed = document.getElementById('postsFeed');
+    const createPostBtn = document.getElementById('createPostBtn');
+    const postText = document.getElementById('postText');
+    const imageUpload = document.getElementById('imageUpload');
+    const contactsList = document.getElementById('contactsList');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendMessageBtn');
+
+    // ----- render posts -----
+    function renderPosts() {
+      postsFeed.innerHTML = '';
+      posts.slice().reverse().forEach(post => { // newest first
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        card.innerHTML = `
+          <div class="post-header">
+            <div class="post-avatar">${post.author.charAt(0)}</div>
+            <div>
+              <div class="post-author">${post.author}</div>
+              <div class="post-time">${post.time}</div>
+            </div>
+          </div>
+          <div class="post-content">
+            <p>${post.text}</p>
+            ${post.image ? `<img src="${post.image}" class="post-image" alt="post image">` : ''}
+          </div>
+        `;
+        postsFeed.appendChild(card);
+      });
+    }
+
+    // ----- render contacts & chat -----
+    function renderContacts() {
+      contactsList.innerHTML = '';
+      contacts.forEach(contact => {
+        const li = document.createElement('li');
+        li.className = `contact ${contact.id === activeContactId ? 'active' : ''}`;
+        li.dataset.id = contact.id;
+        li.innerHTML = `
+          <div class="contact-avatar">${contact.avatar}</div>
+          <div class="contact-info">
+            <div class="contact-name">${contact.name}</div>
+            <div class="contact-status">${contact.status}</div>
+          </div>
+        `;
+        li.addEventListener('click', () => {
+          activeContactId = contact.id;
+          renderContacts();
+          renderChat();
+        });
+        contactsList.appendChild(li);
+      });
+    }
+
+    function renderChat() {
+      const contact = contacts.find(c => c.id === activeContactId);
+      if (!contact) return;
+      chatMessages.innerHTML = '';
+      contact.messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = `message ${msg.from === 'me' ? 'sent' : 'received'}`;
+        div.innerText = msg.text;
+        chatMessages.appendChild(div);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // send message
+    function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      const contact = contacts.find(c => c.id === activeContactId);
+      if (contact) {
+        contact.messages.push({ from: 'me', text: text });
+        renderChat();
+        chatInput.value = '';
+      }
+    }
+
+    // ----- create new post (with image) -----
+    function createNewPost() {
+      const text = postText.value.trim();
+      if (!text) return;
+
+      let imageUrl = null;
+      if (imageUpload.files && imageUpload.files[0]) {
+        const file = imageUpload.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imageUrl = e.target.result;
+          addPostToFeed(text, imageUrl);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        addPostToFeed(text, null);
+      }
+    }
+
+    function addPostToFeed(text, imageUrl) {
+      const newPost = {
+        id: Date.now(),
+        author: 'You',  // in a real app would be logged-in user
+        time: 'just now',
+        text: text,
+        image: imageUrl
+      };
+      posts.push(newPost);
+      renderPosts();
+      // clear inputs
+      postText.value = '';
+      imageUpload.value = '';
+    }
+
+    // ----- toggle screens (login/logout) -----
+    function showDashboard() {
+      loginScreen.classList.add('hidden');
+      dashboardScreen.classList.remove('hidden');
+    }
+
+    function showLogin() {
+      dashboardScreen.classList.add('hidden');
+      loginScreen.classList.remove('hidden');
+    }
+
+    // Event listeners
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showDashboard();
+    });
+
+    signupBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Sign-up would be implemented here. For demo, just use any login.');
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      showLogin();
+    });
+
+    createPostBtn.addEventListener('click', createNewPost);
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // initial renders
+    renderPosts();
+    renderContacts();
+    renderChat();
+
+    // optional: prepopulate with a default user
+    document.getElementById('username').value = 'student@kibu.ac.ke';
+    document.getElementById('password').value = 'password';
+
+  })();
+</script>
+</body>
+</html>
